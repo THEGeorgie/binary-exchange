@@ -15,8 +15,7 @@
 #include <arpa/inet.h>
 
 #define PORT "3490" // the port client will be connecting to
-
-#define MAXDATASIZE 100 // max number of bytes we can get at once
+#define MAXDATASIZE 2097152 //2MB
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -31,10 +30,12 @@ void *get_in_addr(struct sockaddr *sa)
 int main(int argc, char *argv[])
 {
     int sockfd, numbytes;
-    char buf[MAXDATASIZE];
+    char *buf[MAXDATASIZE];
+    char *msg[100];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
+    FILE *fp;
 
     if (argc != 2) {
         fprintf(stderr,"usage: client hostname\n");
@@ -78,17 +79,22 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-    if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
+    if ((numbytes = recv(sockfd, msg, (sizeof(msg)/sizeof(msg[0])), 0)) == -1) {
         perror("recv");
         exit(1);
     }
+    msg[numbytes-1] = '\0';
+    printf("client: received '%s'\n",msg);
 
-    buf[numbytes] = '\0';
+    fp = fopen("/home/user/Desktop/compiled/test.bin", "r");
+    *buf = fgetc(fp);
 
-    printf("client: received '%s'\n",buf);
+    if (send(sockfd, buf, strlen(buf), 0) == -1) {
+        perror("send");
+    }
+
 
     close(sockfd);
 
     return 0;
 }
-
