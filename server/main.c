@@ -79,11 +79,11 @@ int main(void) {
 
 
     sem_t mutex;
-    sem_init(&mutex, 0, 1);
-    if (&mutex == SEM_FAILED) {
-        perror("sem_open failed");
+    if (sem_init(&mutex, 0, 1) != 0) {
+        perror("sem_init failed");
         exit(1);
     }
+
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
@@ -158,7 +158,7 @@ int main(void) {
             close(sockfd); // child doesn't need the listener
             if (send(new_fd, "Connected", strlen("Connected"), 0) == -1)
                 perror("send");
-            char * buf1[MAXDATASIZE];
+            char buf1[MAXDATASIZE];
             while (1) {
 
                 if ((numbytes = recv(new_fd, buf1, MAXDATASIZE - 1, 0)) == -1) {
@@ -170,9 +170,14 @@ int main(void) {
                     }
                     break;
                 }
+
                 sem_wait(&mutex);
-                strcpy(buf,buf1);
+                memcpy(buf, buf1, numbytes);
+                fp = fopen("programs/test", "wb");
+                fwrite(buf, 1, numbytes, fp);
+                fclose(fp);
                 sem_post(&mutex);
+
 
 
             }
@@ -180,8 +185,8 @@ int main(void) {
             exit(0);
         }
     }
-    close(new_fd);
 
+    close(sockfd);
     shmdt(shmaddr);
     shmctl(shmid, IPC_RMID, NULL);
     sem_destroy(&mutex);

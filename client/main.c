@@ -30,15 +30,16 @@ void *get_in_addr(struct sockaddr *sa)
 int main(int argc, char *argv[])
 {
     int sockfd, numbytes;
-    char *buf[MAXDATASIZE];
-    char *msg[100];
+    char buf[MAXDATASIZE];
+    size_t bytesRead;
+    char msg[300];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
     FILE *fp;
 
-    if (argc != 2) {
-        fprintf(stderr,"usage: client hostname\n");
+    if (argc != 3) {
+        fprintf(stderr,"usage: client hostname, directory of program\n");
         exit(1);
     }
 
@@ -83,13 +84,26 @@ int main(int argc, char *argv[])
         perror("recv");
         exit(1);
     }
-    msg[numbytes-1] = '\0';
+    msg[numbytes] = '\0';
     printf("client: received '%s'\n",msg);
 
-    fp = fopen("/home/user/Desktop/compiled/test.bin", "r");
-    *buf = fgetc(fp);
+    fp = fopen(argv[2], "r");
+    if (!fp) {
+        perror("fopen failed");
+        exit(1);
+    }
 
-    if (send(sockfd, buf, strlen(buf), 0) == -1) {
+    size_t totalBytesRead = 0;
+    while ((bytesRead = fread(buf + totalBytesRead, 1, MAXDATASIZE - totalBytesRead, fp)) > 0) {
+        totalBytesRead += bytesRead;
+        if (totalBytesRead >= MAXDATASIZE) {
+            break;
+        }
+    }
+    printf("client: sending '%s'\n",buf);
+    fclose(fp);
+
+    if (send(sockfd, buf, totalBytesRead, 0) == -1) {
         perror("send");
     }
 
