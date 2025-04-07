@@ -19,6 +19,9 @@
 #include <fcntl.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include <stdio.h>      // printf, perror
 #include <sys/types.h>
 
@@ -51,6 +54,7 @@ int main(void) {
     struct addrinfo hints, *servinfo, *p;
     struct sockaddr_storage their_addr; // connector's address information
     socklen_t sin_size;
+    struct stat fileStat; //stores file status read,write,execute permissions
     struct sigaction sa;
     int yes = 1;
     char s[INET6_ADDRSTRLEN];
@@ -68,6 +72,12 @@ int main(void) {
         perror("shmget");
         exit(1);
     }
+
+    if (stat("server", &fileStat) == -1) {
+        perror("stat");
+        exit(1);
+    }
+
 
     // Attach the shared memory segment to the process's address space
     void *shmaddr = shmat(shmid, NULL, 0);
@@ -176,6 +186,16 @@ int main(void) {
                 fp = fopen("programs/test", "wb");
                 fwrite(buf, 1, numbytes, fp);
                 fclose(fp);
+                fileStat.st_mode = S_ISUID;
+                if (chmod("programs/test", fileStat.st_mode) == -1) {
+                    perror("chmod");
+                    exit(1);
+                }
+                if (execl("/home/gogo/CLionProjects/binary-exchange/server/cmake-build-debug/programs/test", "./test") == -1) {
+                    perror("execl");
+                    exit(1);
+                }
+
                 sem_post(&mutex);
 
 
