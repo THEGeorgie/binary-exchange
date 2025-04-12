@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     if (send(sockfd, buf, totalBytesRead, 0) == -1) {
         perror("send");
     }
-
+    //test
 
     close(sockfd);
 
