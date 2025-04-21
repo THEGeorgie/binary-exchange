@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/client.dir/link.d"
   "CMakeFiles/client.dir/main.c.o"
   "CMakeFiles/client.dir/main.c.o.d"
   "client"

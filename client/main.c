@@ -86,7 +86,6 @@ int main(int argc, char *argv[])
     }
     msg[numbytes] = '\0';
     printf("client: received '%s'\n",msg);
-
     fp = fopen(argv[2], "r");
     if (!fp) {
         perror("fopen failed");
@@ -101,14 +100,14 @@ int main(int argc, char *argv[])
         }
     }
     printf("client: sending '%s'\n",buf);
-    fclose(fp);
+
 
     if (send(sockfd, buf, totalBytesRead, 0) == -1) {
         perror("send");
     }
 
-
     close(sockfd);
+    fclose(fp);
 
     return 0;
 }
