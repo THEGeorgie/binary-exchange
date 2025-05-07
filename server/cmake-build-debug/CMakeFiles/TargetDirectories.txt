@@ -1,3 +1,3 @@
-/home/gogo/CLionProjects/binary-exchange/server/cmake-build-debug/CMakeFiles/server.dir
-/home/gogo/CLionProjects/binary-exchange/server/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/gogo/CLionProjects/binary-exchange/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/gogidanev/CLionProjects/peer-peer-Binary-exchange/binary-exchange/server/cmake-build-debug/CMakeFiles/server.dir
+/Users/gogidanev/CLionProjects/peer-peer-Binary-exchange/binary-exchange/server/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/gogidanev/CLionProjects/peer-peer-Binary-exchange/binary-exchange/server/cmake-build-debug/CMakeFiles/rebuild_cache.dir

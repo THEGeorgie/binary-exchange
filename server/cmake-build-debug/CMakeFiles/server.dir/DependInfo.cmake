@@ -8,8 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/gogo/CLionProjects/binary-exchange/server/main.c" "CMakeFiles/server.dir/main.c.o" "gcc" "CMakeFiles/server.dir/main.c.o.d"
-  "" "server" "gcc" "CMakeFiles/server.dir/link.d"
+  "/Users/gogidanev/CLionProjects/peer-peer-Binary-exchange/binary-exchange/server/main.c" "CMakeFiles/server.dir/main.c.o" "gcc" "CMakeFiles/server.dir/main.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

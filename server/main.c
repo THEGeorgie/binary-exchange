@@ -73,7 +73,6 @@ int main(void) {
         exit(1);
     }
 
-
     // Create or open a shared memory object
     int fd;
     if ((fd = shm_open("com_buf", O_CREAT | O_RDWR, 0666)) == -1) {
@@ -218,10 +217,6 @@ int main(void) {
                     perror("unlink");
                     exit(1);
                 }
-
-
-
-
             }
             close(new_fd);
             exit(0);
