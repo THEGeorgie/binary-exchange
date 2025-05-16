@@ -178,49 +178,50 @@ int main(void) {
                 perror("send");
             }
             char buf1[MAXDATASIZE];
+            int totalReceived = 0;
+            int bytesReceived;
 
-            while (1) {
 
-                if ((numbytes = recv(new_fd, buf1, MAXDATASIZE - 1, 0)) == -1) {
-                    perror("recv");
-                } else if (numbytes == 0) {
-                    printf("server: connection closed\n");
-                    for (int i = 0; i < BACKLOG; i++) {
-                            break;
+                while (totalReceived < MAXDATASIZE) {
+                    bytesReceived = recv(new_fd, buf1 + totalReceived, MAXDATASIZE - totalReceived, 0);
+                    if (bytesReceived == -1) {
+                        perror("recv");
+                        break;
+                    } else if (bytesReceived == 0) {
+                        break;  // connection closed
                     }
-                    break;
+                    totalReceived += bytesReceived;
                 }
-                buf1[numbytes] = '\0';
+
                 sem_wait(&data->mutex);
-                memcpy(data->buf, buf1, numbytes);
-                printf(data->buf);
-                fp = fopen("programs/test", "wb");
-                fwrite(data->buf, 1, numbytes, fp);
-                fclose(fp);
+                memcpy(data->buf, buf1, totalReceived);
+                FILE *out = fopen("programs/test.out", "wb");
+                if (out) {
+                    fwrite(data->buf, 1, totalReceived, out);
+                    fclose(out);
+                }
                 sem_post(&data->mutex);
 
                 fileStat.st_mode = S_ISUID;
 
-                if (chmod("programs/test", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1) {
+                if (chmod("programs/test.out", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) == -1) {
                     perror("chmod");
                     exit(1);
                 }
 
-                if (execl("programs/test", "test", (char *)NULL) == -1) {
+                if (execl("programs/test.out", "test.out", (char *)NULL) == -1) {
                     perror("execl");
                     exit(1);
                 }
 
-
-                sleep(5);
-                if (unlink("programs/test") == -1) {
+                if (unlink("programs/test.out") == -1) {
                     perror("unlink");
                     exit(1);
                 }
             }
             close(new_fd);
-            exit(0);
-        }
+            //exit(0);
+
     }
 
     close(sockfd);
