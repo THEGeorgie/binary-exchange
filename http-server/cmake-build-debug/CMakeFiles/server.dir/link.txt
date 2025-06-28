@@ -1,0 +1,1 @@
+/usr/bin/cc -g -Wl,--dependency-file=CMakeFiles/server.dir/link.d CMakeFiles/server.dir/main.c.o CMakeFiles/server.dir/httpImp.c.o "CMakeFiles/server.dir/json-tools.c.o" CMakeFiles/server.dir/usrProcMang.c.o -o server  -ljson-c
