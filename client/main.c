@@ -30,7 +30,7 @@ void *get_in_addr(struct sockaddr *sa)
 int main(int argc, char *argv[])
 {
     int sockfd, numbytes;
-    unsigned char *buf = malloc(MAXDATASIZE);
+    char *buf = malloc(MAXDATASIZE);
     if (buf == NULL) {
         perror("Memory allocation failed");
         return EXIT_FAILURE;
@@ -103,12 +103,21 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    buf = "Hello World";
     printf("client: sending '%s'\n",buf);
 
 
-    if (send(sockfd, buf, totalBytesRead, 0) == -1) {
+    if (send(sockfd, buf, strlen(buf), 0) == -1) {
         perror("send");
     }
+    if ((numbytes = recv(sockfd, msg, (sizeof(msg)/sizeof(msg[0])), 0)) == -1) {
+        perror("recv");
+        exit(1);
+    }
+    close(sockfd);
+
+    msg[numbytes] = '\0';
+    printf("client: received '%s'\n",msg);
 
     FILE *out = fopen("copy.out", "wb");
     printf("client: message length: %d", totalBytesRead);
@@ -117,7 +126,6 @@ int main(int argc, char *argv[])
         fclose(out);
     }
 
-    close(sockfd);
     free(buf);
     fclose(fp);
 

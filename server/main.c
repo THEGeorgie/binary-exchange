@@ -50,6 +50,18 @@ void *get_in_addr(struct sockaddr *sa) {
     return &(((struct sockaddr_in6 *) sa)->sin6_addr);
 }
 
+char *handle_request(char *data, size_t data_size) {
+    char * response_line = "HTTP/1.1 200 OK\r\n";
+    char * blank_line = "\r\n";
+    char * response_body = "Request recived";
+    char response[MAXDATASIZE];
+
+    sprintf(response,sizeof(response), response_line, blank_line,response_body);
+
+    printf("%s", response);
+    return response;
+}
+
 typedef struct {
     sem_t mutex;
     char buf[MAXDATASIZE];
@@ -169,7 +181,7 @@ int main(void) {
         inet_ntop(their_addr.ss_family,
                   get_in_addr((struct sockaddr *) &their_addr),
                   s, sizeof s);
-        printf("server: got connection from %s\n", s);
+        printf("\nserver: got connection from %s\n", s);
 
         if (!fork()) {
             // this is the child process
@@ -177,11 +189,11 @@ int main(void) {
             if (send(new_fd, "Connected", strlen("Connected"), 0) == -1) {
                 perror("send");
             }
-            char buf1[MAXDATASIZE];
+            char buf[MAXDATASIZE];
             int totalReceived = 0;
             int bytesReceived;
 
-
+                /*
                 while (totalReceived < MAXDATASIZE) {
                     bytesReceived = recv(new_fd, buf1 + totalReceived, MAXDATASIZE - totalReceived, 0);
                     if (bytesReceived == -1) {
@@ -192,9 +204,17 @@ int main(void) {
                     }
                     totalReceived += bytesReceived;
                 }
+                */
+                if ((numbytes = recv(new_fd, buf, MAXDATASIZE, 0)) == -1) {
+                    perror("recv");
+                }
+                buf[numbytes] = '\0';
+                char *response = handle_request(buf, numbytes);
 
-                sem_wait(&data->mutex);
-                memcpy(data->buf, buf1, totalReceived);
+                if (send(new_fd, response, strlen(response), 0) == -1) {
+                    perror("server: send");
+                }
+                /*
                 FILE *out = fopen("programs/test.out", "wb");
                 if (out) {
                     fwrite(data->buf, 1, totalReceived, out);
@@ -218,10 +238,10 @@ int main(void) {
                     perror("unlink");
                     exit(1);
                 }
+                */
             }
             close(new_fd);
-            //exit(0);
-
+            exit(0);
     }
 
     close(sockfd);
