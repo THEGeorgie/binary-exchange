@@ -51,8 +51,7 @@ char * handle_login(char * request) {
     extract_js_packet(jdata, "deviceType", &out);
 
     if (strcmp(out, "C") == 0) {
-        int id = 1 + (rand()% 202);
-        append(&client_ids, id);
+        int id = create_user(&client_ids);
         json_object * dataOutput = json_object_new_object();
         create_js_paket_login_server(dataOutput,id, &out);
         json_object_put(jdata);
@@ -60,8 +59,7 @@ char * handle_login(char * request) {
         return out;
     }
     if (strcmp(out, "N") == 0) {
-        int id = 1 + (rand()% 202);
-        append(&node_ids, id);
+        int id = create_user(&node_ids);
         json_object * dataOutput = json_object_new_object();
         create_js_paket_login_server(dataOutput,id, &out);
         json_object_put(jdata);

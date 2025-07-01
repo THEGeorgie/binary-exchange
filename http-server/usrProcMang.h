@@ -16,6 +16,8 @@ extern struct Node * node_ids;
 void append(struct Node **head_ref, int new_data);
 void free_list(struct Node **head);
 int get_node_data(struct Node *head, int index);
+int create_user(struct Node **head);
+int get_list_length(struct Node *head);
 
 
 

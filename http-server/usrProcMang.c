@@ -45,3 +45,30 @@ int get_node_data(struct Node *head, int index) {
     printf("Error out of range");
     return -1;
 }
+
+int get_list_length(struct Node *head) {
+    int count = 0;
+    while (head != NULL) {
+        count++;
+        head = head->next;
+    }
+
+    return count;
+}
+
+int create_user(struct Node **head) {
+    int id = rand()% 1000;
+    int status = 0;
+    while (status == 0) {
+        for (int i = 0; i < get_list_length(*head); i++) {
+            if (get_node_data(*head, i) == id) {
+                id = rand()% 1000;
+                status = 0;
+            }
+        }
+        status = 1;
+    }
+
+    append(head,id);
+    return id;
+}
