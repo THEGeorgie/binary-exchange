@@ -129,6 +129,54 @@ client/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
 .PHONY : client/fast
 
+httpImp.o: httpImp.c.o
+.PHONY : httpImp.o
+
+# target to build an object file
+httpImp.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/httpImp.c.o
+.PHONY : httpImp.c.o
+
+httpImp.i: httpImp.c.i
+.PHONY : httpImp.i
+
+# target to preprocess a source file
+httpImp.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/httpImp.c.i
+.PHONY : httpImp.c.i
+
+httpImp.s: httpImp.c.s
+.PHONY : httpImp.s
+
+# target to generate assembly for a file
+httpImp.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/httpImp.c.s
+.PHONY : httpImp.c.s
+
+json-tools.o: json-tools.c.o
+.PHONY : json-tools.o
+
+# target to build an object file
+json-tools.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/json-tools.c.o
+.PHONY : json-tools.c.o
+
+json-tools.i: json-tools.c.i
+.PHONY : json-tools.i
+
+# target to preprocess a source file
+json-tools.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/json-tools.c.i
+.PHONY : json-tools.c.i
+
+json-tools.s: json-tools.c.s
+.PHONY : json-tools.s
+
+# target to generate assembly for a file
+json-tools.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/json-tools.c.s
+.PHONY : json-tools.c.s
+
 main.o: main.c.o
 .PHONY : main.o
 
@@ -162,6 +210,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... httpImp.o"
+	@echo "... httpImp.i"
+	@echo "... httpImp.s"
+	@echo "... json-tools.o"
+	@echo "... json-tools.i"
+	@echo "... json-tools.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

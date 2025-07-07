@@ -167,20 +167,28 @@ int main(void) {
 
         if (!fork()) {
 
+
             close(sockfd);
-            if ((numbytes = recv(new_fd, buffer,MAXDATASIZE,0)) == -1) {
-                perror("read");
+            while (1) {
+                if ((numbytes = recv(new_fd, buffer,MAXDATASIZE,0)) == -1) {
+                    perror("read");
+                    //break;
+                }
+                buffer[numbytes] = '\0';
+                response = procces_request(buffer);
+                printf("hihi: %s\n", response);
+                if (send(new_fd,response, strlen(response), 0) == -1) {
+                    perror("send");
+                    free(response);
+                    //break;
+                }
+                free(response);
+                break;
             }
-            buffer[numbytes] = '\0';
-            response = procces_request(buffer);
-            printf("%s", response);
-            if (send(new_fd,response, strlen(response), 0) == -1) {
-                perror("send");
-            }
-            free(response);
+            close(new_fd);
+            exit(0);
 
         }
-
         close(new_fd);
         break;
     }

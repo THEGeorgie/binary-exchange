@@ -5,6 +5,7 @@
 #include "usrProcMang.h"
 struct Node *client_ids = NULL;
 struct Node *node_ids = NULL;
+struct Node_Procces *process_id_ticket = NULL;
 
 void append(struct Node **head_ref, int new_data) {
     struct Node *new_node = malloc(sizeof(struct Node));
@@ -63,7 +64,6 @@ int create_user(struct Node **head) {
         for (int i = 0; i < get_list_length(*head); i++) {
             if (get_node_data(*head, i) == id) {
                 id = rand()% 1000;
-                status = 0;
             }
         }
         status = 1;

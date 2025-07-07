@@ -14,5 +14,6 @@ char * procces_request(char * request);
 //status code
 char * handle_login(char * request);
 char * handle_process(char * request);
+char * handle_exit();
 
 #endif //HTTPIMP_H

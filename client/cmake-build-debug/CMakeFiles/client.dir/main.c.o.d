@@ -80,4 +80,19 @@ CMakeFiles/client.dir/main.c.o: \
  /usr/include/asm-generic/sockios.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h \
  /usr/include/x86_64-linux-gnu/bits/in.h /usr/include/rpc/netdb.h \
- /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/arpa/inet.h
+ /usr/include/x86_64-linux-gnu/bits/netdb.h /usr/include/arpa/inet.h \
+ /home/gogo/CLionProjects/binary-exchange/client/httpImp.h \
+ /home/gogo/CLionProjects/binary-exchange/client/json-tools.h \
+ /usr/include/json-c/json.h /usr/include/json-c/arraylist.h \
+ /usr/include/json-c/debug.h /usr/include/json-c/json_c_version.h \
+ /usr/include/json-c/json_object.h /usr/include/json-c/json_inttypes.h \
+ /usr/include/json-c/json_config.h /usr/include/inttypes.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+ /usr/include/json-c/json_types.h /usr/include/json-c/printbuf.h \
+ /usr/include/json-c/json_object_iterator.h \
+ /usr/include/json-c/json_patch.h /usr/include/json-c/json_pointer.h \
+ /usr/include/json-c/json_tokener.h /usr/include/json-c/json_util.h \
+ /usr/include/json-c/linkhash.h \
+ /home/gogo/CLionProjects/binary-exchange/client/global-variables.h

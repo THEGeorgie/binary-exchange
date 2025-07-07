@@ -26,14 +26,19 @@ char * handle_post(char * request, char* path) {
     else if (strcmp(path, "/process") == 0) {
         handler_result = handle_process(body);
     }
+    else if (strcmp(path, "/exit") == 0) {
+        handler_result = handle_exit(body);
+    }
     else {
         return strdup("HTTP/1.1 404 Not Found\r\n\r\n");
     }
 
     if (handler_result) {
+
         int needed_size = snprintf(NULL, 0, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n%s", handler_result);
         response = malloc(needed_size + 1);
         if (response) {
+
             sprintf(response, "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n%s", handler_result);
         }
     }
@@ -41,7 +46,6 @@ char * handle_post(char * request, char* path) {
     if (!response) {
         response = strdup("HTTP/1.1 500 Internal Server Error\r\n\r\n");
     }
-
     return response;
 }
 
@@ -62,7 +66,6 @@ char * handle_login(char * request) {
         int id = create_user(&node_ids);
         json_object * dataOutput = json_object_new_object();
         create_js_paket_login_server(dataOutput,id, &out);
-        json_object_put(jdata);
         json_object_put(dataOutput);
         return out;
     }
@@ -83,5 +86,9 @@ char * procces_request(char * request) {
     if (strcmp(method, "POST") == 0) {
         return handle_post(request, path);
     }
-    return "HTTP/1.1 404 Not Found \r\n\r\nBad request!!!\n";
+        return "HTTP/1.1 404 Not Found \r\n\r\nBad request!!!\n";
+}
+
+char * handle_exit() {
+    return "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n'{\"exit\": true}'";
 }

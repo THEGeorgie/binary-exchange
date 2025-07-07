@@ -11,8 +11,18 @@ struct  Node {
     int data;
     struct Node *next;
 };
+
+struct  Node_Procces {
+    int data;
+    char * name;
+    struct Node_Procces *next;
+};
+
 extern struct Node * client_ids;
 extern struct Node * node_ids;
+extern struct Node_Procces *process_id_ticket;
+
+
 void append(struct Node **head_ref, int new_data);
 void free_list(struct Node **head);
 int get_node_data(struct Node *head, int index);

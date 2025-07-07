@@ -11,8 +11,10 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
 #include <arpa/inet.h>
+
+#include "httpImp.h"
+#include "global-variables.h"
 
 #define PORT "3490" // the port client will be connecting to
 #define MAXDATASIZE 2097152 //2MB
@@ -35,15 +37,21 @@ int main(int argc, char *argv[])
         perror("Memory allocation failed");
         return EXIT_FAILURE;
     }
+    char *response = malloc(MAXDATASIZE);
+    if (response == NULL) {
+        perror("Memory allocation failed");
+        return EXIT_FAILURE;
+    }
     size_t bytesRead;
-    char msg[300];
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
-    FILE *fp;
+    id = 0;
+    fp = NULL;
 
-    if (argc != 3) {
-        fprintf(stderr,"usage: client hostname, directory of program\n");
+
+    if (argc != 4) {
+        fprintf(stderr,"usage: client hostname, directory of program,  directory of data(must be a csv file)\n");
         exit(1);
     }
 
@@ -84,50 +92,36 @@ int main(int argc, char *argv[])
 
     freeaddrinfo(servinfo); // all done with this structure
 
-    if ((numbytes = recv(sockfd, msg, (sizeof(msg)/sizeof(msg[0])), 0)) == -1) {
-        perror("recv");
-        exit(1);
-    }
-    msg[numbytes] = '\0';
-    printf("client: received '%s'\n",msg);
-    fp = fopen(argv[2], "rb");
-    if (!fp) {
-        perror("fopen failed");
-        exit(1);
-    }
-
-    size_t totalBytesRead = 0;
-    while ((bytesRead = fread(buf + totalBytesRead, 1, MAXDATASIZE - totalBytesRead, fp)) > 0) {
-        totalBytesRead += bytesRead;
-        if (totalBytesRead >= MAXDATASIZE) {
-            break;
-        }
-    }
-    buf = "Hello World";
+    buf = create_request("POST", "/login", "","");
     printf("client: sending '%s'\n",buf);
-
 
     if (send(sockfd, buf, strlen(buf), 0) == -1) {
         perror("send");
     }
-    if ((numbytes = recv(sockfd, msg, (sizeof(msg)/sizeof(msg[0])), 0)) == -1) {
+
+    if ((numbytes = recv(sockfd, response, MAXDATASIZE, 0)) == -1) {
         perror("recv");
         exit(1);
     }
-    close(sockfd);
+    //buf[numbytes] = '\0';
+    char *msg = strstr(response, "\r\n\r\n");
+    json_object * jObj = json_tokener_parse(msg);
+    extract_js_packet_int(jObj, "id", &id);
+    printf("client: received id %d\n", id);
+    json_object_put(jObj);
 
-    msg[numbytes] = '\0';
-    printf("client: received '%s'\n",msg);
+    buf = create_request("POST", "/process", argv[3],argv[2]);
+    printf("client: sending process request: '%s'\n",buf);
 
-    FILE *out = fopen("copy.out", "wb");
-    printf("client: message length: %d", totalBytesRead);
-    if (out) {
-        fwrite(buf, 1, totalBytesRead, out);
-        fclose(out);
+    if (send(sockfd, buf, strlen(buf), 0) == -1) {
+        perror("send");
     }
 
+    close(sockfd);
     free(buf);
-    fclose(fp);
+    if (fp != NULL) {
+        fclose(fp);
+    }
 
     return 0;
 }
