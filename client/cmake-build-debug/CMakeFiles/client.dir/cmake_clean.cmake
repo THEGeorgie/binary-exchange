@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/client.dir/link.d"
+  "CMakeFiles/client.dir/global-variables.c.o"
+  "CMakeFiles/client.dir/global-variables.c.o.d"
   "CMakeFiles/client.dir/httpImp.c.o"
   "CMakeFiles/client.dir/httpImp.c.o.d"
   "CMakeFiles/client.dir/json-tools.c.o"

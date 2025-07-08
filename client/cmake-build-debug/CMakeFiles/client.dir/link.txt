@@ -1,1 +1,1 @@
-/usr/bin/cc -g -Wl,--dependency-file=CMakeFiles/client.dir/link.d CMakeFiles/client.dir/main.c.o CMakeFiles/client.dir/httpImp.c.o "CMakeFiles/client.dir/json-tools.c.o" -o client  -ljson-c
+/usr/bin/cc -g -Wl,--dependency-file=CMakeFiles/client.dir/link.d CMakeFiles/client.dir/main.c.o CMakeFiles/client.dir/httpImp.c.o "CMakeFiles/client.dir/json-tools.c.o" "CMakeFiles/client.dir/global-variables.c.o" -o client  -ljson-c

@@ -5,6 +5,7 @@ client: \
   CMakeFiles/client.dir/main.c.o \
   CMakeFiles/client.dir/httpImp.c.o \
   CMakeFiles/client.dir/json-tools.c.o \
+  CMakeFiles/client.dir/global-variables.c.o \
   /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/libjson-c.so \
   /usr/lib/gcc/x86_64-linux-gnu/13/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/13/libgcc_s.so \
@@ -39,6 +40,8 @@ CMakeFiles/client.dir/main.c.o:
 CMakeFiles/client.dir/httpImp.c.o:
 
 CMakeFiles/client.dir/json-tools.c.o:
+
+CMakeFiles/client.dir/global-variables.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/libjson-c.so:
 

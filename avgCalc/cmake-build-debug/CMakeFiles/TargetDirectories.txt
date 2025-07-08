@@ -1,0 +1,3 @@
+/home/gogo/CLionProjects/binary-exchange/avgCalc/cmake-build-debug/CMakeFiles/avgCalc.dir
+/home/gogo/CLionProjects/binary-exchange/avgCalc/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/gogo/CLionProjects/binary-exchange/avgCalc/cmake-build-debug/CMakeFiles/rebuild_cache.dir

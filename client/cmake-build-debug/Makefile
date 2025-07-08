@@ -129,6 +129,30 @@ client/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
 .PHONY : client/fast
 
+global-variables.o: global-variables.c.o
+.PHONY : global-variables.o
+
+# target to build an object file
+global-variables.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/global-variables.c.o
+.PHONY : global-variables.c.o
+
+global-variables.i: global-variables.c.i
+.PHONY : global-variables.i
+
+# target to preprocess a source file
+global-variables.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/global-variables.c.i
+.PHONY : global-variables.c.i
+
+global-variables.s: global-variables.c.s
+.PHONY : global-variables.s
+
+# target to generate assembly for a file
+global-variables.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/global-variables.c.s
+.PHONY : global-variables.c.s
+
 httpImp.o: httpImp.c.o
 .PHONY : httpImp.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... client"
+	@echo "... global-variables.o"
+	@echo "... global-variables.i"
+	@echo "... global-variables.s"
 	@echo "... httpImp.o"
 	@echo "... httpImp.i"
 	@echo "... httpImp.s"

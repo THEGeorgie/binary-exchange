@@ -6,5 +6,5 @@
 #define GLOBAL_VARIABLES_H
 #include <stdio.h>
 extern int id;
-extern FILE *fp;
+
 #endif //GLOBAL_VARIABLES_H

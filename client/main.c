@@ -46,8 +46,6 @@ int main(int argc, char *argv[])
     struct addrinfo hints, *servinfo, *p;
     int rv;
     char s[INET6_ADDRSTRLEN];
-    id = 0;
-    fp = NULL;
 
 
     if (argc != 4) {
@@ -103,13 +101,14 @@ int main(int argc, char *argv[])
         perror("recv");
         exit(1);
     }
-    //buf[numbytes] = '\0';
+    response[numbytes] = '\0';
     char *msg = strstr(response, "\r\n\r\n");
     json_object * jObj = json_tokener_parse(msg);
     extract_js_packet_int(jObj, "id", &id);
     printf("client: received id %d\n", id);
     json_object_put(jObj);
 
+    printf("Program name: %s, data name: %s", argv[2], argv[3]);
     buf = create_request("POST", "/process", argv[3],argv[2]);
     printf("client: sending process request: '%s'\n",buf);
 
@@ -119,9 +118,8 @@ int main(int argc, char *argv[])
 
     close(sockfd);
     free(buf);
-    if (fp != NULL) {
-        fclose(fp);
-    }
+    free(response);
+
 
     return 0;
 }
