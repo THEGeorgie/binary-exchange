@@ -175,15 +175,15 @@ int main(void) {
                     //break;
                 }
                 buffer[numbytes] = '\0';
+                printf("Received:%s", buffer);
                 response = procces_request(buffer);
-                printf("hihi: %s\n", response);
+                printf("%s\n", response);
                 if (send(new_fd,response, strlen(response), 0) == -1) {
                     perror("send");
                     free(response);
                     //break;
                 }
                 free(response);
-                break;
             }
             close(new_fd);
             exit(0);

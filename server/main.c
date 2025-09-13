@@ -210,7 +210,7 @@ int main(void) {
                 }
                 buf[numbytes] = '\0';
                 char *response = handle_request(buf, numbytes);
-
+                printf("Sending:%s", response);
                 if (send(new_fd, response, strlen(response), 0) == -1) {
                     perror("server: send");
                 }

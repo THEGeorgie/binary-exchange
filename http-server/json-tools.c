@@ -58,7 +58,7 @@ int extract_js_packet_int(json_object *jobj, char key[], int *out) {
     }
     json_object *jobjC;
     if (json_object_object_get_ex(jobj, key, &jobjC)) {
-        *out = strdup(json_object_get_int(jobjC));
+        *out = json_object_get_int(jobjC);
     } else {
         printf("Key not found: %s\n", key);
         return -1;

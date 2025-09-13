@@ -102,7 +102,11 @@ int main(int argc, char *argv[])
         exit(1);
     }
     response[numbytes] = '\0';
+
     char *msg = strstr(response, "\r\n\r\n");
+    if (msg == NULL) {
+        perror("client: ");
+    }
     json_object * jObj = json_tokener_parse(msg);
     extract_js_packet_int(jObj, "id", &id);
     printf("client: received id %d\n", id);

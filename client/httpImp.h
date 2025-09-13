@@ -9,7 +9,11 @@
 char * handle_get(char *path);
 char * handle_post(char* path, char* data, char * program);
 char * create_request(char * method, char * path, char* data, char * program);
-char *base64_encode(const unsigned char *data, size_t input_length, size_t *output_length);
+
+
+char *base64_encode(const unsigned char *data,
+                    size_t input_length,
+                    size_t *output_length);
 
 //status code
 char * handle_login();
